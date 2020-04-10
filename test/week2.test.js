@@ -1,24 +1,18 @@
-const {
-  getFillings,
-  isFromManchester,
-  getBusNumbers,
-  countSheep,
-  hasMPostCode
-} = require("../challenges/week2");
+const { getFillings, isFromManchester, getBusNumbers, countSheep, hasMPostCode } = require("../challenges/week2");
 
 describe("getFillings", () => {
   test("returns the fillings of a sandwich", () => {
     const sandwich = {
       bread: "Sourdough",
       fillings: ["brie", "relish", "lettuce"],
-      accompaniment: "crisps"
+      accompaniment: "crisps",
     };
     expect(getFillings(sandwich)).toEqual(["brie", "relish", "lettuce"]);
 
     const sandwich2 = {
       bread: "Rye",
       fillings: ["smoked salmon", "dill"],
-      accompaniment: "wedges"
+      accompaniment: "wedges",
     };
     expect(getFillings(sandwich2)).toEqual(["smoked salmon", "dill"]);
   });
@@ -29,7 +23,7 @@ describe("isFromManchester", () => {
     const person = {
       name: "Mohammed",
       city: "Manchester",
-      age: 23
+      age: 23,
     };
     expect(isFromManchester(person)).toBe(true);
   });
@@ -38,7 +32,7 @@ describe("isFromManchester", () => {
     const person = {
       name: "Anisa",
       city: "Leeds",
-      age: 39
+      age: 39,
     };
     expect(isFromManchester(person)).toBe(false);
   });
@@ -90,17 +84,7 @@ describe("countSheep", () => {
   });
 
   test("returns 5 if there are 5 sheep in the array", () => {
-    const arr = [
-      "dog",
-      "sheep",
-      "dog",
-      "sheep",
-      "chicken",
-      "sheep",
-      "hare",
-      "sheep",
-      "sheep"
-    ];
+    const arr = ["dog", "sheep", "dog", "sheep", "chicken", "sheep", "hare", "sheep", "sheep"];
     expect(countSheep(arr)).toBe(5);
   });
 });
@@ -113,8 +97,8 @@ describe("hasMPostCode", () => {
       address: {
         line1: "1a Pool Road",
         city: "Manchester",
-        postCode: "M16 8DR"
-      }
+        postCode: "M16 8DR",
+      },
     };
     expect(hasMPostCode(person)).toBe(true);
   });
@@ -126,8 +110,8 @@ describe("hasMPostCode", () => {
       address: {
         line1: "44 Bridge Street",
         city: "Leeds",
-        postCode: "LS11 6BT"
-      }
+        postCode: "LS11 6BT",
+      },
     };
     expect(hasMPostCode(person)).toBe(false);
   });
@@ -139,8 +123,8 @@ describe("hasMPostCode", () => {
       address: {
         line1: "11 Stone Street",
         city: "Maidstone",
-        postCode: "ME20 5BR"
-      }
+        postCode: "ME20 5BR",
+      },
     };
     expect(hasMPostCode(person)).toBe(false);
   });
