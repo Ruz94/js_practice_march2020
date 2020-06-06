@@ -4,39 +4,86 @@
  * @param {Array} arr
  * @returns {Number}
  */
-const sumMultiples = arr => {
+const sumMultiples = (arr) => {
   if (arr === undefined) throw new Error("arr is required");
+
+  let total = 0;
+
+  arr.forEach((num) => {
+    if (num % 3 === 0 || num % 5 === 0) {
+      total += num;
+    }
+  });
+  return total;
 };
 
 /**
- * This function will receive a string of characters and should return true/false depending on whether it is a valid DNA string. A valid DNA string may contain characters C, G, T or A only.
+ * This function will receive a string of characters and should return true/false depending on
+ * whether it is a valid DNA string. A valid DNA string may contain characters C, G, T or A only.
  * @param {String} str
  * @returns {Boolean}
  */
-const isValidDNA = str => {
+const isValidDNA = (str) => {
   if (str === undefined) throw new Error("str is required");
+  if (typeof str !== "string") throw new Error("string required");
+
+  const validLetters = ["C", "G", "T", "A"];
+
+  if (validLetters.includes(str.toUpperCase())) {
+    return true;
+  }
+  return false;
 };
 
 /**
- * This function will receive a valid DNA string (see above) and should return a string of the complementary base pairs. In DNA, T always pairs with A, and C always pairs with G. So a string of "ACTG" would have a complementary DNA string of "TGAC".
+ * This function will receive a valid DNA string (see above)
+ * and should return a string of the complementary base pairs.
+ * In DNA, T always pairs with A, and C always pairs with G.
+ * So a string of "ACTG" would have a complementary DNA string of "TGAC".
  * @param {String} str
  * @returns {String}
  */
-const getComplementaryDNA = str => {
+const getComplementaryDNA = (str) => {
   if (str === undefined) throw new Error("str is required");
+  if (isValidDNA(str)) throw new Error("valid DNA string required");
+
+  //loop through string using map
+  // individual character switched with complementary base pair character
+  // return a string of the complementary base pairs
+
+  return str
+    .split("")
+    .map((char) => {
+      switch (char) {
+        case "A":
+          return "T";
+        case "T":
+          return "A";
+        case "C":
+          return "G";
+        case "G":
+          return "C";
+        default:
+          return null;
+      }
+    })
+    .join("");
 };
 
 /**
- * This function should receive a number and return true/false depending on whether it is a prime number or not. A prime number is a number that can only be divided evenly by 1 and itself (for example, 7)
+ * This function should receive a number and return true/false depending on whether it is a prime number or not.
+ * A prime number is a number that can only be divided evenly by 1 and itself (for example, 7)
  * @param {Number} n
  * @returns {Boolean}
  */
-const isItPrime = n => {
+const isItPrime = (n) => {
   if (n === undefined) throw new Error("n is required");
 };
 
 /**
- * This function should receive a number and return an array of n arrays, each filled with n items. The parameter "fill" should be used as the filler of the arrays. For example, given parameters 3 and "foo" the resulting matrix should be:
+ * This function should receive a number and return an array of n arrays, each filled with n items.
+ * The parameter "fill" should be used as the filler of the arrays.
+ * For example, given parameters 3 and "foo" the resulting matrix should be:
  * [
  *   ["foo", "foo", "foo"],
  *   ["foo", "foo", "foo"],
@@ -58,7 +105,8 @@ const createMatrix = (n, fill) => {
  *  { name: "Pedro", rota: ["Saturday", "Sunday", "Tuesday", "Wednesday"] },
  *  ...etc
  * ]
- * and a day of the week. For the café to run successfully, at least 3 staff members are required per day. The function should return true/false depending on whether there are enough staff scheduled for the given day.
+ * and a day of the week. For the café to run successfully, at least 3 staff members are required per day.
+ * The function should return true/false depending on whether there are enough staff scheduled for the given day.
  * @param {Array} staff
  * @param {String} day
  * @returns {Boolean}
@@ -74,5 +122,5 @@ module.exports = {
   getComplementaryDNA,
   isItPrime,
   createMatrix,
-  areWeCovered
+  areWeCovered,
 };
