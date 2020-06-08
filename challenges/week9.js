@@ -6,6 +6,8 @@
  */
 const sumMultiples = (arr) => {
   if (arr === undefined) throw new Error("arr is required");
+  if (!arr) throw new Error("arr is required");
+  if (!Array.isArray(arr)) throw new Error("an Array is required");
 
   let total = 0;
 
@@ -47,10 +49,6 @@ const getComplementaryDNA = (str) => {
   if (str === undefined) throw new Error("str is required");
   if (isValidDNA(str)) throw new Error("valid DNA string required");
 
-  //loop through string using map
-  // individual character switched with complementary base pair character
-  // return a string of the complementary base pairs
-
   return str
     .split("")
     .map((char) => {
@@ -78,10 +76,23 @@ const getComplementaryDNA = (str) => {
  */
 const isItPrime = (n) => {
   if (n === undefined) throw new Error("n is required");
+
+  if (typeof n !== "number" || n <= 1 || n % 1 !== 0) {
+    return false;
+  }
+
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+    if (n % i === 0) {
+      return false;
+    }
+  }
+  return true;
 };
 
 /**
- * This function should receive a number and return an array of n arrays, each filled with n items.
+ * This function should receive a number
+ * return an array of n arrays
+ * each filled with n items.
  * The parameter "fill" should be used as the filler of the arrays.
  * For example, given parameters 3 and "foo" the resulting matrix should be:
  * [
@@ -96,6 +107,13 @@ const isItPrime = (n) => {
 const createMatrix = (n, fill) => {
   if (n === undefined) throw new Error("n is required");
   if (fill === undefined) throw new Error("fill is required");
+
+  return Array.from(
+    {
+      length: n,
+    },
+    () => new Array(n).fill(fill)
+  );
 };
 
 /**
@@ -114,6 +132,10 @@ const createMatrix = (n, fill) => {
 const areWeCovered = (staff, day) => {
   if (staff === undefined) throw new Error("staff is required");
   if (day === undefined) throw new Error("day is required");
+
+  if (staff.length === 0) {
+    return false;
+  }
 };
 
 module.exports = {

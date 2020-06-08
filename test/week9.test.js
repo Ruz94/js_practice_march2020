@@ -1,13 +1,27 @@
 const { sumMultiples, isValidDNA, getComplementaryDNA, isItPrime, createMatrix, areWeCovered } = require("../challenges/week9");
 
 describe("sumMultiples", () => {
-  test("it returns the sum of any numbers that are a multiple of 3 or 5", () => {
+  test("throws an error if not passed an array", () => {
+    expect(() => {
+      sumMultiples();
+    }).toThrow("arr is required");
+
+    expect(() => {
+      sumMultiples("foo");
+    }).toThrow("an Array is required");
+
+    expect(() => {
+      sumMultiples(4);
+    }).toThrow("an Array is required");
+  });
+
+  test("returns the sum of any numbers that are a multiple of 3 or 5", () => {
     const result = sumMultiples([1, 3, 5]);
     const expected = 8;
     expect(result).toBe(expected);
   });
 
-  test("it works okay with decimal numbers", () => {
+  test("works with decimal numbers", () => {
     const result = sumMultiples([1, 3, 5.0, 2, 12, 10]);
     const expected = 30;
     expect(result).toBe(expected);
@@ -40,7 +54,7 @@ describe("isValidDNA", () => {
 });
 
 describe("getComplementaryDNA", () => {
-  test("return a string of the complimentary base pairs of DNA String - T always pairs with A, and C always pairs with G", () => {
+  test("returns a string of the complimentary base pairs of DNA String - T always pairs with A, and C always pairs with G", () => {
     expect(getComplementaryDNA("ACTG")).toEqual("TGAC");
     expect(getComplementaryDNA("GTCA")).toEqual("CAGT");
   });
@@ -51,5 +65,95 @@ describe("getComplementaryDNA", () => {
     expect(getComplementaryDNA("GTACT")).toEqual("CATGA");
   });
 
-  test("throws an error if string doesn't include valid DNA String ", () => {});
+  //   test("throws an error if string doesn't include valid DNA String", () => {
+  //     expect(() => {
+  //       getComplementaryDNA();
+  //     }).toThrow("valid DNA string required");
+  //   });
+});
+
+describe("isItPrime", () => {
+  test("returns false if n isn't a number", () => {
+    expect(isItPrime("1")).toBe(false);
+  });
+
+  test("returns false if number is <= 1", () => {
+    expect(isItPrime(1)).toBe(false);
+    expect(isItPrime(0)).toBe(false);
+  });
+
+  test("returns false if number is decimal", () => {
+    expect(isItPrime(0.9)).toBe(false);
+    expect(isItPrime(4.9)).toBe(false);
+  });
+
+  test("returns false if number is not a prime number", () => {
+    expect(isItPrime(8)).toBe(false);
+    expect(isItPrime(9)).toBe(false);
+  });
+
+  test("returns true if number can be divided evenly by 1 and itself ", () => {
+    expect(isItPrime(2)).toBe(true);
+    expect(isItPrime(11)).toBe(true);
+    expect(isItPrime(151)).toBe(true);
+  });
+});
+
+describe.only("createMatrix", () => {
+  // test("returns empty array when passed 0", () => {
+  //   const result = createMatrix(0);
+  //   const expected = [[]];
+  //   expect(result).toEqual(expected);
+  // });
+
+  test("returns a matrix of 1 * 1 when passed 1", () => {
+    const result = createMatrix(1, "foo");
+    const expected = [["foo"]];
+    expect(result).toEqual(expected);
+  });
+
+  test("returns a matrix of 3 * 3 when passed 3", () => {
+    const result = createMatrix(3, "foo");
+    const expected = [
+      ["foo", "foo", "foo"],
+      ["foo", "foo", "foo"],
+      ["foo", "foo", "foo"],
+    ];
+    expect(result).toEqual(expected);
+  });
+
+  test("returns a matrix of the same length as number that is passed in", () => {
+    const result = createMatrix(6, "foo");
+    const expected = [
+      ["foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo"],
+    ];
+    expect(result).toEqual(expected);
+  });
+});
+
+describe("areWeCovered", () => {
+  test("returns false if there are no staff at all", () => {
+    expect(areWeCovered([], "Sunday")).toBe(false);
+    expect(areWeCovered([], "Monday")).toBe(false);
+    expect(areWeCovered([], "Tuesday")).toBe(false);
+    expect(areWeCovered([], "Wednesday")).toBe(false);
+    expect(areWeCovered([], "Thursday")).toBe(false);
+    expect(areWeCovered([], "Friday")).toBe(false);
+    expect(areWeCovered([], "Saturday")).toBe(false);
+  });
+
+  test("returns false if there are staff but < 3 are not scheduled to work", () => {
+    const staff = [
+      { name: "rachel", rota: ["Monday", "Tuesday"] },
+      { name: "sarah", rota: ["Monday", "Tuesday"] },
+      { name: "john", rota: ["Monday", "Tuesday"] },
+      { name: "mike", rota: ["Monday", "Tuesday"] },
+    ];
+    expect(areWeCovered(staff, "Wednesday")).toBe(false);
+  });
 });
