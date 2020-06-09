@@ -31,8 +31,14 @@ const isValidDNA = (str) => {
 
   const validLetters = ["C", "G", "T", "A"];
 
-  if (validLetters.includes(str.toUpperCase())) {
-    return true;
+  if (str.length) {
+    let result = true;
+    str.split("").forEach((s) => {
+      if (!validLetters.includes(s.toUpperCase())) {
+        result = false;
+      }
+    });
+    return result;
   }
   return false;
 };
@@ -47,7 +53,7 @@ const isValidDNA = (str) => {
  */
 const getComplementaryDNA = (str) => {
   if (str === undefined) throw new Error("str is required");
-  if (isValidDNA(str)) throw new Error("valid DNA string required");
+  if (!isValidDNA(str)) throw new Error("valid DNA string required");
 
   return str
     .split("")
@@ -133,9 +139,21 @@ const areWeCovered = (staff, day) => {
   if (staff === undefined) throw new Error("staff is required");
   if (day === undefined) throw new Error("day is required");
 
-  if (staff.length === 0) {
+  if (staff.length < 3) {
     return false;
   }
+
+  let counter = 0;
+  staff.forEach((p) => {
+    if (p.rota.includes(day)) {
+      counter++;
+    }
+  });
+
+  if (counter >= 3) {
+    return true;
+  }
+  return false;
 };
 
 module.exports = {

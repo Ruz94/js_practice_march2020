@@ -51,9 +51,15 @@ describe("isValidDNA", () => {
     expect(isValidDNA("g")).toBe(true);
     expect(isValidDNA("t")).toBe(true);
   });
+
+  test("Check if array contains more than 1 character", () => {
+    expect(isValidDNA("ACTG")).toBe(true);
+    expect(isValidDNA("ABC")).toBe(false);
+    expect(isValidDNA("GTCAA")).toBe(true);
+  });
 });
 
-describe("getComplementaryDNA", () => {
+describe.only("getComplementaryDNA", () => {
   test("returns a string of the complimentary base pairs of DNA String - T always pairs with A, and C always pairs with G", () => {
     expect(getComplementaryDNA("ACTG")).toEqual("TGAC");
     expect(getComplementaryDNA("GTCA")).toEqual("CAGT");
@@ -65,11 +71,11 @@ describe("getComplementaryDNA", () => {
     expect(getComplementaryDNA("GTACT")).toEqual("CATGA");
   });
 
-  //   test("throws an error if string doesn't include valid DNA String", () => {
-  //     expect(() => {
-  //       getComplementaryDNA();
-  //     }).toThrow("valid DNA string required");
-  //   });
+  test("throws an error if string doesn't include valid DNA String", () => {
+    expect(() => {
+      getComplementaryDNA("");
+    }).toThrow("valid DNA string required");
+  });
 });
 
 describe("isItPrime", () => {
@@ -99,7 +105,7 @@ describe("isItPrime", () => {
   });
 });
 
-describe.only("createMatrix", () => {
+describe("createMatrix", () => {
   // test("returns empty array when passed 0", () => {
   //   const result = createMatrix(0);
   //   const expected = [[]];
@@ -133,6 +139,21 @@ describe.only("createMatrix", () => {
       ["foo", "foo", "foo", "foo", "foo", "foo"],
     ];
     expect(result).toEqual(expected);
+
+    const arr = createMatrix(10, "foo");
+    const arrExpected = [
+      ["foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo"],
+      ["foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo"],
+    ];
+    expect(arr).toEqual(arrExpected);
   });
 });
 
@@ -149,11 +170,25 @@ describe("areWeCovered", () => {
 
   test("returns false if there are staff but < 3 are not scheduled to work", () => {
     const staff = [
-      { name: "rachel", rota: ["Monday", "Tuesday"] },
-      { name: "sarah", rota: ["Monday", "Tuesday"] },
-      { name: "john", rota: ["Monday", "Tuesday"] },
-      { name: "mike", rota: ["Monday", "Tuesday"] },
+      { name: "Tim", rota: ["Saturday", "Sunday", "Tuesday", "Thursday", "Friday"] },
+      { name: "Dave", rota: ["Saturday", "Sunday", "Monday", "Wednesday", "Thursday"] },
+      { name: "Sam", rota: ["Sunday", "Monday", "Tuesday", "Thursday", "Friday"] },
+      { name: "John", rota: ["Saturday", "Monday", "Tuesday", "Wednesday", "Friday"] },
     ];
     expect(areWeCovered(staff, "Wednesday")).toBe(false);
+  });
+
+  test("returns true if there are >= 3 staff scheduled to work", () => {
+    const staff = [
+      { name: "Tim", rota: ["Saturday", "Sunday", "Tuesday", "Thursday", "Friday"] },
+      { name: "Dave", rota: ["Saturday", "Sunday", "Monday", "Wednesday", "Thursday"] },
+      { name: "Sam", rota: ["Saturday", "Sunday", "Monday", "Tuesday", "Thursday", "Friday"] },
+      { name: "John", rota: ["Saturday", "Monday", "Tuesday", "Wednesday", "Friday"] },
+    ];
+    expect(areWeCovered(staff, "Monday")).toBe(true);
+    expect(areWeCovered(staff, "Tuesday")).toBe(true);
+    expect(areWeCovered(staff, "Thursday")).toBe(true);
+    expect(areWeCovered(staff, "Friday")).toBe(true);
+    expect(areWeCovered(staff, "Saturday")).toBe(true);
   });
 });
