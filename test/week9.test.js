@@ -59,7 +59,7 @@ describe("isValidDNA", () => {
   });
 });
 
-describe.only("getComplementaryDNA", () => {
+describe("getComplementaryDNA", () => {
   test("returns a string of the complimentary base pairs of DNA String - T always pairs with A, and C always pairs with G", () => {
     expect(getComplementaryDNA("ACTG")).toEqual("TGAC");
     expect(getComplementaryDNA("GTCA")).toEqual("CAGT");
@@ -106,12 +106,6 @@ describe("isItPrime", () => {
 });
 
 describe("createMatrix", () => {
-  // test("returns empty array when passed 0", () => {
-  //   const result = createMatrix(0);
-  //   const expected = [[]];
-  //   expect(result).toEqual(expected);
-  // });
-
   test("returns a matrix of 1 * 1 when passed 1", () => {
     const result = createMatrix(1, "foo");
     const expected = [["foo"]];
@@ -153,6 +147,12 @@ describe("createMatrix", () => {
       ["foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo"],
       ["foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo", "foo"],
     ];
+    expect(arr).toEqual(arrExpected);
+  });
+
+  test("returns empty array if different data type is passed in for n", () => {
+    const arr = createMatrix("", "foo");
+    const arrExpected = [];
     expect(arr).toEqual(arrExpected);
   });
 });
