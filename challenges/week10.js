@@ -73,12 +73,29 @@ const createRange = (start, end, step = 1) => {
 const getScreentimeAlertList = (users, date) => {
   if (users === undefined) throw new Error("users is required");
   if (date === undefined) throw new Error("date is required");
+
+  return users
+    .filter((u) => {
+      const matchingTime = u.screenTime.find(({ date: screenDate = "" }) => screenDate === date);
+      if (matchingTime) {
+        const { usage = {} } = matchingTime;
+        const usageValues = Object.values(usage);
+        const reducer = usageValues.reduce((a, b) => a + b, 0);
+
+        if (reducer >= 100) {
+          return true;
+        }
+      }
+    })
+    .map(({ username }) => {
+      return username;
+    });
 };
 
 /**
- * This function will receive a hexadecimal color code in the format #FF1133. A hexadecimal code
- * is a number written in hexadecimal notation, i.e. base 16. If you want to know more about hexadecimal notation:
- * https://www.youtube.com/watch?v=u_atXp-NF6w
+ * This function will receive a hexadecimal color code in the format #FF1133.
+ * A hexadecimal code is a number written in hexadecimal notation, i.e. base 16.
+ * If you want to know more about hexadecimal notation: https://www.youtube.com/watch?v=u_atXp-NF6w
  * For colour codes, the first 2 chars (FF in this case) represent the amount of red, the next 2 chars (11)
  * represent the amound of green, and the last 2 chars (33) represent the amount of blue.
  * Colours can also be represented in RGB format, using decimal notation.
@@ -89,6 +106,16 @@ const getScreentimeAlertList = (users, date) => {
  */
 const hexToRGB = (hexStr) => {
   if (hexStr === undefined) throw new Error("hexStr is required");
+  if (typeof hexStr !== "string") throw new Error("string is required");
+
+  const array = hexStr.split("");
+  let rgb = [];
+  //starting loop at index 1 to avoid #
+  for (let i = 1; i < array.length; i = i + 2) {
+    const hexadecimal = array[i] + array[i + 1];
+    rgb = [...rgb, parseInt(hexadecimal, 16)];
+  }
+  return `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
 };
 
 /**
@@ -105,6 +132,9 @@ const hexToRGB = (hexStr) => {
  */
 const findWinner = (board) => {
   if (board === undefined) throw new Error("board is required");
+  if (!Array.isArray(board)) throw new Error("an Array is required");
+
+  const options = ["X", "0", null];
 };
 
 module.exports = {
