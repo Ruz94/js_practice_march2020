@@ -137,7 +137,7 @@ describe("getScreentimeAlertList", () => {
   });
 });
 
-describe.only("hexToRGB", () => {
+describe("hexToRGB", () => {
   test("throws an error if not passed hexStr", () => {
     expect(() => {
       hexToRGB();
@@ -170,15 +170,30 @@ describe("findWinner", () => {
     }).toThrow("an Array is required");
   });
 
-  test("return results of winner", () => {
+  test("returns X if Player X has won", () => {
     const board = [
-      ["X", "0", null],
-      ["X", null, "0"],
-      ["X", null, "0"],
+      [null, null, null],
+      [null, null, null],
+      [null, null, null],
     ];
+    expect(findWinner(board)).toBe("X");
+  });
 
-    expect(findWinner(board, "X")).toBe("X");
-    expect(findWinner(board, "0")).toBe("0");
-    expect(findWinner(board, null)).toBe(null);
+  test("returns O if Player O has won", () => {
+    const board = [
+      [null, null, null],
+      [null, null, null],
+      [null, null, null],
+    ];
+    expect(findWinner(board)).toBe("O");
+  });
+
+  test("returns null if there is no winner", () => {
+    const board = [
+      [null, null, null],
+      [null, null, null],
+      [null, null, null],
+    ];
+    expect(findWinner(board)).toBe(null);
   });
 });
