@@ -133,12 +133,18 @@ const hexToRGB = (hexStr) => {
 const findWinner = (board) => {
   if (board === undefined) throw new Error("board is required");
   if (!Array.isArray(board)) throw new Error("an Array is required");
-  //variable for user input
-  //create a 3x3 array
 
-  //horizontal check
-  //vertical check
-  //diagonal check
+  //horizontal check -three rows
+  //[1,2,3],[4,5,6],[7,8,9]
+
+  //vertical check -three columns
+  //[1,4,7],[2,5,8],[3,6,9]
+
+  //diagonal check -two diagonals
+  //[1,5,9],[3,5,7]
+
+  //variable for user input
+  //variable for computer input
 };
 
 module.exports = {

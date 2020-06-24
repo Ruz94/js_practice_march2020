@@ -170,29 +170,74 @@ describe("findWinner", () => {
     }).toThrow("an Array is required");
   });
 
-  test("returns X if Player X has won", () => {
+  test("returns X if Player X has won horizontally", () => {
     const board = [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null],
+      ["X", "X", "X"],
+      ["X", "0", "0"],
+      ["0", "X", "0"],
     ];
     expect(findWinner(board)).toBe("X");
   });
 
-  test("returns O if Player O has won", () => {
+  test("returns X if Player X has won vertically", () => {
     const board = [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null],
+      ["X", "0", "X"],
+      ["X", "0", "0"],
+      ["X", "X", "0"],
     ];
-    expect(findWinner(board)).toBe("O");
+    expect(findWinner(board)).toBe("X");
+  });
+
+  test("returns X if Player X has won diagonally", () => {
+    const board = [
+      ["0", "0", "X"],
+      ["0", "X", "X"],
+      ["X", "X", "0"],
+    ];
+    expect(findWinner(board)).toBe("X");
+  });
+
+  test("returns 0 if Player 0 has won horizontally", () => {
+    const board = [
+      ["0", "X", "X"],
+      ["0", "0", "0"],
+      ["X", "X", "0"],
+    ];
+    expect(findWinner(board)).toBe("0");
+  });
+
+  test("returns 0 if Player 0 has won vertically", () => {
+    const board = [
+      ["X", "0", "0"],
+      ["X", "X", "0"],
+      ["0", "X", "0"],
+    ];
+    expect(findWinner(board)).toBe("0");
+  });
+
+  test("returns 0 if Player 0 has won diagonally", () => {
+    const board = [
+      ["0", "0", "X"],
+      ["X", "0", "0"],
+      ["X", "X", "0"],
+    ];
+    expect(findWinner(board)).toBe("0");
   });
 
   test("returns null if there is no winner", () => {
     const board = [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null],
+      ["X", "0", "X"],
+      ["X", "0", "0"],
+      ["0", "X", "0"],
+    ];
+    expect(findWinner(board)).toBe(null);
+  });
+
+  test("returns null if there is no winner", () => {
+    const board = [
+      ["0", "0", "X"],
+      ["X", "0", "X"],
+      ["X", "X", "0"],
     ];
     expect(findWinner(board)).toBe(null);
   });
