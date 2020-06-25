@@ -170,6 +170,12 @@ describe("findWinner", () => {
     }).toThrow("an Array is required");
   });
 
+  test("throws an error if board is empty", () => {
+    expect(() => {
+      findWinner([]);
+    }).toThrow("board can't be empty");
+  });
+
   test("returns X if Player X has won horizontally", () => {
     const board = [
       ["X", "X", "X"],
@@ -233,11 +239,11 @@ describe("findWinner", () => {
     expect(findWinner(board)).toBe(null);
   });
 
-  test("returns null if there is no winner", () => {
+  test("returns null if there is a tie", () => {
     const board = [
-      ["0", "0", "X"],
+      ["0", "0", "0"],
       ["X", "0", "X"],
-      ["X", "X", "0"],
+      ["X", "X", "X"],
     ];
     expect(findWinner(board)).toBe(null);
   });

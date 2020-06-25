@@ -133,18 +133,56 @@ const hexToRGB = (hexStr) => {
 const findWinner = (board) => {
   if (board === undefined) throw new Error("board is required");
   if (!Array.isArray(board)) throw new Error("an Array is required");
+  if (!board.length) throw new Error("board can't be empty");
 
-  //horizontal check -three rows
-  //[1,2,3],[4,5,6],[7,8,9]
+  let sequences = [];
 
-  //vertical check -three columns
-  //[1,4,7],[2,5,8],[3,6,9]
+  board.forEach((boardRow, rowIndex) => {
+    boardRow.forEach((posValue, posIndex) => {
+      if (rowIndex === 0) {
+        let newArr = [];
+        for (let i = 0; i < boardRow.length; i++) {
+          newArr = [...newArr, board[i][posIndex]];
+        }
+        sequences = [...sequences, newArr];
+        if (posIndex === 0) {
+          newArr = [];
+          for (let i = 0; i < boardRow.length; i++) {
+            newArr = [...newArr, board[i][i]];
+          }
+          sequences = [...sequences, newArr];
+        }
+        if (posIndex === boardRow.length - 1) {
+          newArr = [];
+          for (let i = 0; i < boardRow.length; i++) {
+            const curPos = boardRow.length - 1 - i;
+            newArr = [...newArr, board[i][curPos]];
+          }
+          sequences = [...sequences, newArr];
+        }
+      }
+      if (posIndex === 0) {
+        sequences = [...sequences, boardRow];
+      }
+    });
+  });
 
-  //diagonal check -two diagonals
-  //[1,5,9],[3,5,7]
+  let winner = null;
+  sequences.forEach((sequence) => {
+    const res = sequence.every((seq) => {
+      return seq === sequence[0];
+    });
 
-  //variable for user input
-  //variable for computer input
+    if (res) {
+      if (!winner || winner === sequence[0]) {
+        winner = sequence[0];
+      } else {
+        winner = null;
+      }
+    }
+  });
+
+  return winner;
 };
 
 module.exports = {
